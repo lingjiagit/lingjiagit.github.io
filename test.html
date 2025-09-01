@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>静心随笔 - 个人博客</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: #ffdd40;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ffdd40;
+        }
+        
+        /* 英雄区域样式 */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            color: white;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #ffdd40;
+            color: #333;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #ffd52b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 主要内容区域 */
+        .main-content {
+            display: flex;
+            margin: 40px 0;
+        }
+        
+        .articles {
+            flex: 2;
+            margin-right: 40px;
+        }
+        
+        .article {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .article:hover {
+            transform: translateY(-5px);
+        }
+        
+        .article-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .article-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .article:hover .article-img img {
+            transform: scale(1.05);
+        }
+        
+        .article-content {
+            padding: 25px;
+        }
+        
+        .article-content h2 {
+            margin-bottom: 15px;
+            color: #2575fc;
+        }
+        
+        .article-meta {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .article-meta i {
+            margin-right: 5px;
+        }
+        
+        /* 侧边栏样式 */
+        .sidebar {
+            flex: 1;
+        }
+        
+        .sidebar-widget {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .sidebar-widget h3 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            color: #2575fc;
+        }
+        
+        .about-me {
+            text-align: center;
+        }
+        
+        .about-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .categories ul {
+            list-style: none;
+        }
+        
+        .categories ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .categories ul li:last-child {
+            border-bottom: none;
+        }
+        
+        .categories ul li a {
+            color: #555;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .categories ul li a:hover {
+            color: #2575fc;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: #f0f0f0;
+            color: #555;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin: 0 5px 5px 0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .tag:hover {
+            background: #2575fc;
+            color: white;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 20px;
+            padding: 0 15px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #ffdd40;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links ul li a:hover {
+            color: #ffdd40;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #394a5d;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: #ffdd40;
+            color: #333;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #394a5d;
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .articles {
+                margin-right: 0;
+                margin-bottom: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+            
+            .footer-section {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">静心<span>随笔</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">文章</a></li>
+                        <li><a href="#">分类</a></li>
+                        <li><a href="#">关于</a></li>
+                        <li><a href="#">联系</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>记录思考，分享生活</h1>
+                <p>在这里，我分享我的技术见解、生活感悟和创作灵感</p>
+                <a href="#" class="btn">阅读最新文章</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <div class="main-content">
+            <!-- 文章列表 -->
+            <div class="articles">
+                <div class="article">
+                    <div class="article-img">
+                        <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="技术思考">
+                    </div>
+                    <div class="article-content">
+                        <h2>前端开发的未来趋势</h2>
+                        <div class="article-meta">
+                            <span><i class="far fa-calendar"></i> 2023年10月15日</span>
+                            <span><i class="far fa-folder"></i> 技术</span>
+                        </div>
+                        <p>随着Web技术的快速发展，前端开发领域正在经历巨大的变革。从静态页面到动态应用，从jQuery到现代框架，前端开发已经走过了漫长的道路。本文将探讨未来前端开发的可能发展方向。</p>
+                        <a href="#" class="btn">阅读更多</a>
+                    </div>
+                </div>
+
+                <div class="article">
+                    <div class="article-img">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="旅行笔记">
+                    </div>
+                    <div class="article-content">
+                        <h2>雪山徒步旅行笔记</h2>
+                        <div class="article-meta">
+                            <span><i class="far fa-calendar"></i> 2023年10月8日</span>
+                            <span><i class="far fa-folder"></i> 旅行</span>
+                        </div>
+                        <p>上个月的雪山之旅让我重新认识了大自然的壮丽与人类的渺小。海拔4000米的高度，零下10度的低温，以及稀薄的空气，都让这次徒步成为一次身心的挑战与洗礼。</p>
+                        <a href="#" class="btn">阅读更多</a>
+                    </div>
+                </div>
+
+                <div class="article">
+                    <div class="article-img">
+                        <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="阅读心得">
+                    </div>
+                    <div class="article-content">
+                        <h2>《思考，快与慢》阅读心得</h2>
+                        <div class="article-meta">
+                            <span><i class="far fa-calendar"></i> 2023年10月1日</span>
+                            <span><i class="far fa-folder"></i> 阅读</span>
+                        </div>
+                        <p>丹尼尔·卡尼曼的这本经典之作揭示了人类思维的两个系统：快速直觉的系统1和缓慢理性的系统2。通过大量实验案例，作者展示了我们如何在不知不觉中做出非理性决策。</p>
+                        <a href="#" class="btn">阅读更多</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 侧边栏 -->
+            <div class="sidebar">
+                <div class="sidebar-widget about-me">
+                    <h3>关于我</h3>
+                    <div class="about-img">
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="作者">
+                    </div>
+                    <p>一名热爱技术、旅行和阅读的全栈开发者，喜欢记录和分享生活中的点滴思考。</p>
+                </div>
+
+                <div class="sidebar-widget categories">
+                    <h3>文章分类</h3>
+                    <ul>
+                        <li><a href="#">技术 <span>(15)</span></a></li>
+                        <li><a href="#">旅行 <span>(8)</span></a></li>
+                        <li><a href="#">阅读 <span>(12)</span></a></li>
+                        <li><a href="#">生活 <span>(23)</span></a></li>
+                        <li><a href="#">摄影 <span>(6)</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3>热门标签</h3>
+                    <div class="tags">
+                        <a href="#" class="tag">JavaScript</a>
+                        <a href="#" class="tag">CSS</a>
+                        <a href="#" class="tag">旅行</a>
+                        <a href="#" class="tag">阅读</a>
+                        <a href="#" class="tag">React</a>
+                        <a href="#" class="tag">Node.js</a>
+                        <a href="#" class="tag">摄影</a>
+                        <a href="#" class="tag">登山</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于博客</h3>
+                    <p>静心随笔是一个分享技术、生活和思考的个人博客，记录成长路上的点滴感悟。</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <div class="footer-links">
+                        <ul>
+                            <li><a href="#">首页</a></li>
+                            <li><a href="#">文章</a></li>
+                            <li><a href="#">分类</a></li>
+                            <li><a href="#">关于</a></li>
+                            <li><a href="#">联系</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>联系我</h3>
+                    <p><i class="fas fa-envelope"></i> contact@example.com</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2023 静心随笔 | 个人博客</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
