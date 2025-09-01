@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内容随机生成器</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .generators-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .generator-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+        
+        .generator-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background: #4e54c8;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.4rem;
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .card-content p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .result-container {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 150px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4e54c8;
+        }
+        
+        .result {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            background: #4e54c8;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background: #3f44a7;
+            transform: scale(1.03);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .generators-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>内容随机生成器</h1>
+            <p class="subtitle">一键生成随机内容，用于测试、灵感激发或只是娱乐</p>
+        </header>
+        
+        <div class="generators-container">
+            <div class="generator-card">
+                <div class="card-header">
+                    <h2>随机引文</h2>
+                </div>
+                <div class="card-content">
+                    <p>点击按钮生成著名作家、哲学家和思想家的随机名言。</p>
+                    <div class="result-container">
+                        <p class="result" id="quote-result">点击下方按钮生成引文</p>
+                    </div>
+                    <button class="btn" onclick="generateQuote()">
+                        <i class="fas fa-quote-left"></i> 生成随机引文
+                    </button>
+                </div>
+            </div>
+            
+            <div class="generator-card">
+                <div class="card-header">
+                    <h2>随机故事</h2>
+                </div>
+                <div class="card-content">
+                    <p>生成一个简短的随机故事开头，用于写作灵感。</p>
+                    <div class="result-container">
+                        <p class="result" id="story-result">点击下方按钮生成故事</p>
+                    </div>
+                    <button class="btn" onclick="generateStory()">
+                        <i class="fas fa-book"></i> 生成随机故事
+                    </button>
+                </div>
+            </div>
+            
+            <div class="generator-card">
+                <div class="card-header">
+                    <h2>随机事实</h2>
+                </div>
+                <div class="card-content">
+                    <p>发现关于世界、科学和历史的有趣随机事实。</p>
+                    <div class="result-container">
+                        <p class="result" id="fact-result">点击下方按钮生成事实</p>
+                    </div>
+                    <button class="btn" onclick="generateFact()">
+                        <i class="fas fa-lightbulb"></i> 生成随机事实
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 随机内容生成器 | 设计用于创意和灵感</p>
+        </footer>
+    </div>
+
+    <script>
+        // 随机引文数据
+        const quotes = [
+            "唯一不变的是变化本身。 - 赫拉克利特",
+            "知识就是力量。 - 弗朗西斯·培根",
+            "我思故我在。 - 勒内·笛卡尔",
+            "生命中最美好的事物是免费的。 - 佚名",
+            "成功的秘诀是把平凡的事做得非凡地好。 - 约翰·D·洛克菲勒",
+            "想象力比知识更重要。 - 阿尔伯特·爱因斯坦",
+            "要么找到一条路，要么开辟一条路。 - 汉尼拔",
+            "不要等待时机，要创造时机。 - 乔治·伯纳德·肖",
+            "最大的风险是不冒任何风险。 - 马克·扎克伯格",
+            " simplicity is the ultimate sophistication. - 列奥纳多·达·芬奇"
+        ];
+        
+        // 随机故事开头数据
+        const stories = [
+            "在遥远的未来，人类已经殖民了火星。一天，一个年轻的科学家在挖掘时发现了一个神秘的外星文物...",
+            "小镇上的图书馆有一个秘密：每午夜时分，书中的角色会活过来。图书管理员艾米丽是唯一知道这个秘密的人...",
+            "当莎拉收到那封没有寄件人的信时，她不知道这将会改变她的一生。信中只有一个坐标和一个日期：明天...",
+            "在一个所有梦境都被记录和分析的社会里，亚历克斯是唯一无法被读取梦境的人。这使他成为了最危险的人物...",
+            "老船长在退休前最后一次航行中，在海上发现了一个漂浮的瓶子。里面不是信件，而是一把古老的钥匙...",
+            "在动物能与人交谈的世界里，侦探迈克唯一的搭档是一只愤世嫉俗的暹罗猫，他们一起解决最棘手的案件...",
+            "当时间旅行成为可能的那天，莉莉决定回到过去见见她从未谋面的祖母，却意外改变了家族的历史..."
+        ];
+        
+        // 随机事实数据
+        const facts = [
+            "蜂蜜永远不会变质。考古学家在古埃及金字塔中发现了一罐仍然可以食用的蜂蜜。",
+            "章鱼有三个心脏。两个专门用于将血液输送到鳃，第三个用于将血液输送到身体其他部位。",
+            "地球上的树木比银河系中的星星还要多。据估计，地球上有约3万亿棵树，而银河系中只有1000-4000亿颗恒星。",
+            "人类与香蕉共享约60%的DNA。这并不意味着一半是香蕉，而是表明所有生物都有共同的祖先。",
+            "月球正以每年3.8厘米的速度远离地球。这意味着数百万年前，月球看起来比现在大得多。",
+            "光从太阳到地球需要8分19秒。所以我们看到的太阳实际上是它8分钟前的样子。",
+            "地球上最古老的已知生物是地中海的一种海草，估计已有10万年的历史。",
+            "人的胃酸非常强，足以溶解剃须刀片。但请不要尝试验证这个事实！"
+        ];
+        
+        // 生成随机引文
+        function generateQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const resultElement = document.getElementById('quote-result');
+            resultElement.innerHTML = quotes[randomIndex];
+            resultElement.classList.add('fade-in');
+            setTimeout(() => resultElement.classList.remove('fade-in'), 500);
+        }
+        
+        // 生成随机故事
+        function generateStory() {
+            const randomIndex = Math.floor(Math.random() * stories.length);
+            const resultElement = document.getElementById('story-result');
+            resultElement.innerHTML = stories[randomIndex];
+            resultElement.classList.add('fade-in');
+            setTimeout(() => resultElement.classList.remove('fade-in'), 500);
+        }
+        
+        // 生成随机事实
+        function generateFact() {
+            const randomIndex = Math.floor(Math.random() * facts.length);
+            const resultElement = document.getElementById('fact-result');
+            resultElement.innerHTML = facts[randomIndex];
+            resultElement.classList.add('fade-in');
+            setTimeout(() => resultElement.classList.remove('fade-in'), 500);
+        }
+    </script>
+</body>
+</html>
